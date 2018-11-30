@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{77830772-C020-4F30-9240-D05478CCAEBB}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>LaFabriqueDeHeros2</RootNamespace>
-    <AssemblyName>LaFabriqueDeHeros2</AssemblyName>
+    <RootNamespace>TheHeroFactory</RootNamespace>
+    <AssemblyName>TheHeroFactory</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -46,6 +46,7 @@
     <Compile Include="Characters.cs" />
     <Compile Include="Hero.cs" />
     <Compile Include="Inn.cs" />
+    <Compile Include="Monster.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
