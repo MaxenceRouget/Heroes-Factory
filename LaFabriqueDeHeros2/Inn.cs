@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-/*using System.Text;
+using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Binary;*/
+using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using System.Xml.Serialization;
 
@@ -13,15 +13,8 @@ namespace TheHeroFactory
     [Serializable]
     class Inn
     {
-        //variables
-
         private string name;
 
-        //methods
-        /*public Inn(List<Hero> _List)
-        {
-            List<Hero> TableauDeHero = _List;
-        }*/
         public Inn(string _name)
         {
             this.name = _name;
@@ -391,7 +384,7 @@ namespace TheHeroFactory
                         xmlSer.Serialize(stream, tabOfHero);
                         stream.Close();
                         Console.Clear();
-                        TextMiddle("Sauvegarde Effectuer");
+                        TextMiddle("Sauvegarde Effectué");
                         Console.ReadKey();
                         break;
 

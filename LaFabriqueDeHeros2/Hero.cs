@@ -47,10 +47,10 @@ namespace TheHeroFactory
         public void Write()
         {
             Console.WriteLine("Le nom de votre héro est : " + name);
-            Console.WriteLine("Son Niveau est : " + level+"\n");
+            Console.WriteLine("Son niveau est : " + level+"\n");
             Console.WriteLine("Son attaque est de : " + statisticAttack);
             Console.WriteLine("Sa defense est de : "+ statisticDefense);
-            Console.WriteLine("Son endurence est de : "+ statisticDodge);
+            Console.WriteLine("Son endurance est de : "+ statisticDodge);
         }
 
         public void Train(float _Exp)
