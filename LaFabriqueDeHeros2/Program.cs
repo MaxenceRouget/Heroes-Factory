@@ -39,9 +39,6 @@ namespace TheHeroFactory
 
                 save = (Save)serializer.Deserialize(stream);
 
-                Console.WriteLine("Coucou" + save.List + " " + " " + save.NameInn);
-
-                System.Threading.Thread.Sleep(5000);
                 Inn inn = new Inn(save.NameInn);
                 stream.Dispose();
                 inn.Hub(save.List, save.NameInn);

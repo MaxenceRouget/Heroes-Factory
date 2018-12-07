@@ -35,6 +35,116 @@ namespace TheHeroFactory
             }
 
         }
+        private void Delete(List<Hero> _listOfHeroes)
+        {
+            List <Hero> tabOfHero = _listOfHeroes; 
+            this.showListHero(tabOfHero);
+            Console.WriteLine("_____ Saisir le nom du héro à supprimer ______");
+            string line = Console.ReadLine();
+            int search = this.Compare(line, tabOfHero);
+
+            if (search > tabOfHero.Count())
+            {
+                Console.WriteLine("Trop grand nombre");
+            }
+
+            else
+            {
+                try
+                {
+                    Console.Clear();
+                    tabOfHero.RemoveAt(search);
+                    TextMiddle("Supression effectuée");
+                    Console.ReadKey();
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine("/!\\ Petit problème");
+                }
+            }
+        }
+        public void Serialization(List<Hero> _tabOfHero)
+        {
+            Stream stream = File.OpenWrite(Environment.CurrentDirectory + "\\mySave.txt");
+
+            XmlSerializer xmlSer = new XmlSerializer(typeof(Save));
+
+            Save save = new Save();
+            save.List = _tabOfHero;
+            save.NameInn = this.name;
+
+            xmlSer.Serialize(stream, save);
+
+            stream.Close();
+        }
+
+        public Hero ChooseYourHero(List<Hero> _tabOfHero)
+        {
+            List<Hero> tabOfHero = _tabOfHero;
+            Hero heroChoose = new Hero();
+
+            string line = Console.ReadLine();
+            int search = this.Compare(line, tabOfHero);
+
+            //barrière 
+            if (search > tabOfHero.Count)
+            {
+                Console.WriteLine("Petit problème");
+            }
+
+            try
+            {
+                heroChoose = tabOfHero[search];
+                Console.WriteLine(heroChoose.getSetAttack);
+            }
+            catch (Exception)
+            {
+                TextMiddle("Pas trouvé :/ ");
+            }
+            Console.WriteLine(heroChoose.getSetAttack);
+            return heroChoose;
+        }
+
+
+        public void MenuFight(List<Hero> _tabOfHero)
+        {
+            List<Hero> tabOfHero = _tabOfHero;
+            if (tabOfHero.Count() <= 1)
+            {
+                Console.WriteLine("Il faut au moins deux héros pour combattre");
+                Console.ReadKey();
+            }
+            this.showListHero(tabOfHero);
+            TextMiddle("_____Quel héro est le premier combattant ?_____");
+
+            Hero hero1 = ChooseYourHero(tabOfHero);
+        //Deuxième Hero 
+        
+            Console.Clear();
+            TextMiddle("_____ Choisit le deuxième héro _____");
+            this.showListHero(tabOfHero);
+           
+            Hero hero2 = ChooseYourHero(tabOfHero);
+
+
+            string heroDead = Fight(hero1, hero2);
+            //Console.WriteLine(heroDead);
+
+            if (heroDead == hero1.Name)
+            {
+                Console.WriteLine(hero1.Name + " est mort ");
+                tabOfHero.Remove(hero1);
+            }
+            else
+            {
+                Console.WriteLine(hero2.Name +" est mort");
+                tabOfHero.Remove(hero2);
+            }
+
+            Console.WriteLine("Combat Fini");
+
+            Console.ReadKey();
+        }
 
         public bool Verification(string _name, List<Hero> _List)
         {
@@ -89,7 +199,7 @@ namespace TheHeroFactory
             }
         }
 
-        public String Fight(Hero _hero1, Hero _hero2)
+        public string Fight(Hero _hero1, Hero _hero2)
         {
             Hero fighter1 = _hero1;
             Hero fighter2 = _hero2;
@@ -265,135 +375,21 @@ namespace TheHeroFactory
                     case '4':
                         Console.Clear();
                         TextMiddle("_____ Combat de Heros _____");
-
-                        if (tabOfHero.Count() <= 1)
-                        {
-                            Console.WriteLine("Il faut au moins deux héros pour combattre");
-                            Console.ReadKey();
-                            break;
-                        }
-                        this.showListHero(tabOfHero);
-                    Fig:
-                        TextMiddle("_____Quel héro est le premier combattant ?_____");
-                        line = Console.ReadLine();
-                        search = this.Compare(line, tabOfHero);
-
-                        //barrière 
-                        if (search > tabOfHero.Count)
-                        {
-                            Console.WriteLine("Petit problème");
-                            goto Fig;
-                        }
-
-                        try
-                        {
-                            Hero her0 = tabOfHero[search];
-                        }
-                        catch (Exception)
-                        {
-                            TextMiddle("Pas trouvé :/ ");
-                            goto Fig;
-                        }
-                        Hero hero1 = tabOfHero[search];
-                    //Deuxième Hero 
-
-                    Fig2:
-                        Console.Clear();
-                        TextMiddle("_____ Choisit le deuxième héro _____");
-                        this.showListHero(tabOfHero);
-                        line = Console.ReadLine();
-                        int searchCompare = this.Compare(line, tabOfHero);
-
-                        //barrière 
-                        if (searchCompare > tabOfHero.Count)
-                        {
-                            Console.WriteLine("Petit problème");
-                            goto Fig2;
-                        }
-
-                        if (searchCompare == search)
-                        {
-                            Console.WriteLine("Un hero ne peut pas se battre contre lui même");
-                            Console.ReadKey();
-                            goto Fig2;
-                        }
-
-                        try
-                        {
-                            Hero heroTry2 = tabOfHero[searchCompare];
-                        }
-                        catch (Exception)
-                        {
-                            TextMiddle("Pas trouvé :/ ");
-                            goto Fig2;
-                        }
-                        Hero hero2 = tabOfHero[searchCompare];
-
-                        string heroDead = Fight(hero1, hero2);
-
-                        //Console.WriteLine(heroDead);
-
-                        if (heroDead == hero1.Name)
-                        {
-                            Console.WriteLine("C'est " + hero1.Name + "Qui est mort");
-                            tabOfHero.Remove(hero1);
-                        }
-                        else
-                        {
-                            Console.WriteLine("C'est " + hero2.Name + "Qui est mort");
-                            tabOfHero.Remove(hero2);
-                        }
-
-                        Console.WriteLine("Combat Fini");
-
-                        Console.ReadKey();
+                        this.MenuFight(tabOfHero);
                         break;
 
                     //Tu vas pas supprimer ton héros :'(
                     case '5':
-                        search = 0;
                         Console.Clear();
                         TextMiddle("_____Supprimer des héros ______");
-                        this.showListHero(tabOfHero);
-                        Console.WriteLine("_____ Saisir le nom du héro à supprimer ______");
-                        line = Console.ReadLine();
-                        search = this.Compare(line, tabOfHero);
-                        Console.ReadKey();
-                        if (search > tabOfHero.Count())
-                        {
-                            Console.WriteLine("Trop grand nombre");
-                        }
-                        else
-                        {
-                            try
-                            {
-                                tabOfHero.RemoveAt(search);
-                                TextMiddle("Supression effectuée");
-                                Console.ReadKey();
-                            }
-                            catch (Exception)
-                            {
-                                Console.WriteLine("/!\\ Petit problème");
-                                break;
-                            }
-                        }
+                        this.Delete(tabOfHero);
                         Console.Clear();
                         break;
 
                     //Sauvagarder c'est important !!!! 
                     case '6':
-
-                        Stream stream = File.OpenWrite(Environment.CurrentDirectory + "\\mySave.txt");
-
-                        XmlSerializer xmlSer = new XmlSerializer(typeof(Save));
-
-                        Save save = new Save();
-                        save.List = tabOfHero;
-                        save.NameInn = this.name;
-
-                        xmlSer.Serialize(stream, save);
-
-                        stream.Close();
+                        TextMiddle("Sauvegarde");
+                        this.Serialization(tabOfHero);
                         Console.Clear();
                         TextMiddle("Sauvegarde Effectué");
                         Console.ReadKey();
