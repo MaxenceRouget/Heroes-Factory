@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using System.Xml.Serialization;
 
@@ -13,7 +9,14 @@ namespace TheHeroFactory
     [Serializable]
     class Inn
     {
+        [XmlText]
         private string name;
+
+        public string Name
+        {
+            get { return name; }
+            set { name = value; }
+        }
 
         public Inn(string _name)
         {
@@ -39,7 +42,7 @@ namespace TheHeroFactory
             List<Hero> tabOfHeroes = _List;
             try
             {
-              foreach(Hero h in tabOfHeroes)
+                foreach (Hero h in tabOfHeroes)
                 {
                     if (h.Name == _name)
                     {
@@ -51,10 +54,10 @@ namespace TheHeroFactory
             {
                 Console.WriteLine("/!\\ Petit problème 404 IDK");
             }
-            return result; 
+            return result;
         }
 
-        public int Compare(string _name,List<Hero> _List)
+        public int Compare(string _name, List<Hero> _List)
         {
             List<Hero> tabOfHeroes = _List;
             int indexHero = 0;
@@ -64,16 +67,17 @@ namespace TheHeroFactory
                 {
                     indexHero++;
                 }
-            }catch(Exception)
+            }
+            catch (Exception)
             {
                 Console.WriteLine("/!\\ Petit problème 404 IDK");
             }
-            return indexHero; 
+            return indexHero;
         }
 
         public void showListHero(List<Hero> _tabOfHeroes)
         {
-            List<Hero>tabOfHero = _tabOfHeroes;
+            List<Hero> tabOfHero = _tabOfHeroes;
             foreach (Hero h in tabOfHero)
             {
                 TextMiddle("_____" + h.Name + "____\n");
@@ -81,6 +85,7 @@ namespace TheHeroFactory
                 Console.WriteLine("Son attaque est " + h.getSetAttack);
                 Console.WriteLine("Sa defense est " + h.getSetDefense);
                 Console.WriteLine("Son endurance est " + h.getSetDodge);
+                Console.WriteLine("Sa vie est : " + h.Health);
             }
         }
 
@@ -95,22 +100,23 @@ namespace TheHeroFactory
             {
                 int turn = 1;
                 Console.WriteLine("Tour numero " + turn);
-                Console.WriteLine("C'est "+ fighter1.Name + " qui commence ");
+                Console.WriteLine("C'est " + fighter1.Name + " qui commence ");
                 Console.WriteLine(fighter1.Name + " Attaque !!");
 
                 float damage = fighter1.Attack(fighter2);
+                string damage1 = damage.ToString();
                 fighter2.TakeDamage(damage);
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.BackgroundColor = ConsoleColor.Black;
-                Console.WriteLine(fighter2.Name + " prend " + damage + " de degats\n");
+                Console.WriteLine(fighter2.Name + " prend " + damage1 + " de degats\n");
                 System.Threading.Thread.Sleep(1000);
                 Console.ResetColor();
                 if (fighter2.Health <= 0)
-                    {
+                {
                     dead = fighter2.Name;
-                        break;
-                    }
-                 else
+                    break;
+                }
+                else
                 {
                     Console.WriteLine(fighter2.Name + " Attaque !!");
                     float _damage = fighter2.Attack(fighter1);
@@ -126,7 +132,7 @@ namespace TheHeroFactory
                         dead = fighter1.Name;
                         break;
                     }
-                   
+
                 }
 
             } while (fighter1.Health > 0 && fighter2.Health > 0);
@@ -142,19 +148,18 @@ namespace TheHeroFactory
             Console.WriteLine(text);
         }
 
-        public List<Hero> Hub(List<Hero> _list)
+        public void Hub(List<Hero> _list, string _nameInn)
         {
             int search = 0;
             int compt2 = 0;
             string heroName;
             ConsoleKeyInfo choose;
-
-             List<Hero> tabOfHero =  _list;
+            List<Hero> tabOfHero = _list;
             do
             {
                 Console.Clear();
 
-                TextMiddle("===== Bienvenue dans l'auberge de " + name + "=====");
+                TextMiddle("===== Bienvenue dans l'auberge de " + _nameInn + "=====");
                 TextMiddle("_____________Salut Pelerin_________________");
                 TextMiddle("__________Que souhaite tu faires ? ________");
                 TextMiddle("___________________Tape____________________");
@@ -180,7 +185,8 @@ namespace TheHeroFactory
                         if (heroName != "quit")
                         {
                             bool verif = this.Verification(heroName, tabOfHero);
-                            if (verif == true) {
+                            if (verif == true)
+                            {
                                 Console.Clear();
                                 TextMiddle("Ce nom est déjà attribué ! ");
                                 Console.ReadKey();
@@ -191,7 +197,6 @@ namespace TheHeroFactory
                                 Hero bernard = new Hero();
                                 bernard.Name = heroName;
                                 bernard.Write();
-
                                 tabOfHero.Add(bernard);
                                 Console.ReadKey();
                                 compt2++;
@@ -206,13 +211,14 @@ namespace TheHeroFactory
                         Console.ReadKey();
                         break;
 
-                    case '3':
+                    case '3': //a changer 
+
                     train:
                         Console.Clear();
                         TextMiddle("_____Entrainer un héro_____");
                         this.showListHero(tabOfHero);
                         TextMiddle("_____Quel héro entrainer ?_____");
-                        TextMiddle("Tape quit pour quitter "); 
+                        TextMiddle("Tape quit pour quitter ");
                         string line = Console.ReadLine();
                         if (line == "quit")
                         {
@@ -247,18 +253,18 @@ namespace TheHeroFactory
                                 goto train;
                             }
                         }
-                            TextMiddle(" Voulez vous recommencer ?! ");
-                            TextMiddle("O pour oui");
-                            line = Console.ReadLine();
-                            if (line == "o"|| line =="O")
-                            {
-                                goto train;
-                            }
+                        TextMiddle(" Voulez vous recommencer ?! ");
+                        TextMiddle("o pour oui");
+                        line = Console.ReadLine();
+                        if (line == "o" || line == "O")
+                        {
+                            goto train;
+                        }
                         break;
 
                     case '4':
                         Console.Clear();
-                       TextMiddle("_____ Combat de Heros _____");
+                        TextMiddle("_____ Combat de Heros _____");
 
                         if (tabOfHero.Count() <= 1)
                         {
@@ -269,9 +275,9 @@ namespace TheHeroFactory
                         this.showListHero(tabOfHero);
                     Fig:
                         TextMiddle("_____Quel héro est le premier combattant ?_____");
-                         line = Console.ReadLine();
-                         search = this.Compare(line, tabOfHero);
-                      
+                        line = Console.ReadLine();
+                        search = this.Compare(line, tabOfHero);
+
                         //barrière 
                         if (search > tabOfHero.Count)
                         {
@@ -279,9 +285,11 @@ namespace TheHeroFactory
                             goto Fig;
                         }
 
-                        try { Hero her0 = tabOfHero[search];
+                        try
+                        {
+                            Hero her0 = tabOfHero[search];
                         }
-                        catch(Exception)
+                        catch (Exception)
                         {
                             TextMiddle("Pas trouvé :/ ");
                             goto Fig;
@@ -341,20 +349,15 @@ namespace TheHeroFactory
                         Console.ReadKey();
                         break;
 
-                        //Tu vas pas supprimer ton héros :'(
+                    //Tu vas pas supprimer ton héros :'(
                     case '5':
                         search = 0;
                         Console.Clear();
                         TextMiddle("_____Supprimer des héros ______");
-                        foreach (Hero h in tabOfHero)
-                        {
-                            Console.WriteLine(h.Name);
-                        }
-
+                        this.showListHero(tabOfHero);
                         Console.WriteLine("_____ Saisir le nom du héro à supprimer ______");
                         line = Console.ReadLine();
                         search = this.Compare(line, tabOfHero);
-                        Console.WriteLine(search);
                         Console.ReadKey();
                         if (search > tabOfHero.Count())
                         {
@@ -362,55 +365,61 @@ namespace TheHeroFactory
                         }
                         else
                         {
-                            try {
+                            try
+                            {
                                 tabOfHero.RemoveAt(search);
                                 TextMiddle("Supression effectuée");
                                 Console.ReadKey();
                             }
                             catch (Exception)
-                            { Console.WriteLine("/!\\ Petit problème");
-                                break; }
+                            {
+                                Console.WriteLine("/!\\ Petit problème");
+                                break;
+                            }
                         }
                         Console.Clear();
                         break;
 
-                        //Sauvagarder c'est important !!!! 
+                    //Sauvagarder c'est important !!!! 
                     case '6':
-                        
-                     Stream stream = File.OpenWrite(Environment.CurrentDirectory + "\\mySave.txt");
 
-                        XmlSerializer xmlSer = new XmlSerializer(typeof(List<Hero>));
+                        Stream stream = File.OpenWrite(Environment.CurrentDirectory + "\\mySave.txt");
 
-                        xmlSer.Serialize(stream, tabOfHero);
+                        XmlSerializer xmlSer = new XmlSerializer(typeof(Save));
+
+                        Save save = new Save();
+                        save.List = tabOfHero;
+                        save.NameInn = this.name;
+
+                        xmlSer.Serialize(stream, save);
+
                         stream.Close();
                         Console.Clear();
                         TextMiddle("Sauvegarde Effectué");
                         Console.ReadKey();
                         break;
 
-                        // Ici on cheat nous Monsieur ! 
+                    // Ici on cheat nous Monsieur ! 
                     case '9':
                         Console.Clear();
                         Console.WriteLine("Cheat");
                         Console.WriteLine("_____Ameliorer des héros ______");
-                        foreach (Hero h in tabOfHero)
-                        {
-                            Console.WriteLine(h.Name);
-                        }
+                        this.showListHero(tabOfHero);
 
                         Console.WriteLine("_____saisir le numero du héro à amelioré ______");
                         line = Console.ReadLine();
                         search = 0;
-                        try { 
+                        try
+                        {
                             search = int.Parse(line);
                         }
-                        catch(Exception)
+                        catch (Exception)
                         {
                             Console.WriteLine("Problème /!\\ Chiffre entrée incorrect");
                             break;
                         }
 
-                        if (search+1 > tabOfHero.Count())
+                        if (search + 1 > tabOfHero.Count())
                         {
                             Console.WriteLine("Problème /!\\ Chiffre entrée trop grand ");
                             break;
@@ -420,10 +429,10 @@ namespace TheHeroFactory
                         objet1.LevelUp();
                         Console.ReadKey();
                         break;
-                };  
+                };
 
             } while (choose.Key != ConsoleKey.Escape);
-            return tabOfHero;
+            //return tabOfHero;
         }
     }
 }

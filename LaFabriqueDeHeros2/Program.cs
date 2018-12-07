@@ -1,17 +1,26 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Serialization;
 
 namespace TheHeroFactory
 {
+    public struct Save
+    {
+        private List<Hero> list;
+        private string nameInn;
+
+        public List<Hero> List
+        {
+            get { return list; }
+            set { list = value; }
+        }
+        public string NameInn
+        {
+            get { return nameInn; }
+            set { nameInn = value; }
+        }
+    }
     class Program
     {
         static void Main(string[] args)
@@ -19,30 +28,34 @@ namespace TheHeroFactory
             string innName;
 
             string folder = Directory.GetCurrentDirectory();
-             string folderWay = folder+"\\mySave.txt";
+            string folderWay = folder + "\\mySave.txt";
 
-                //Console.WriteLine(FolderWay);
-             if(File.Exists(folderWay))
-             {
-                List<Hero> tabOfHeroes = null;
-                XmlSerializer serializer = new XmlSerializer(typeof(List<Hero>));
+            //Console.WriteLine(FolderWay);
+            if (File.Exists(folderWay))
+            {
+                Save save = new Save();
+                XmlSerializer serializer = new XmlSerializer(typeof(Save));
                 FileStream stream = File.OpenRead(folderWay);
 
-                tabOfHeroes = (List<Hero>)serializer.Deserialize(stream);
-                Inn inn = new Inn("Sauvegarde");
+                save = (Save)serializer.Deserialize(stream);
+
+                Console.WriteLine("Coucou" + save.List + " " + " " + save.NameInn);
+
+                System.Threading.Thread.Sleep(5000);
+                Inn inn = new Inn(save.NameInn);
                 stream.Dispose();
-                inn.Hub(tabOfHeroes); 
+                inn.Hub(save.List, save.NameInn);
             }
-             else
-             {
+            else
+            {
                 Console.SetCursorPosition(45, 0);
                 Inn.TextMiddle("Comment s'appelle votre auberge ");
-                 innName = Console.ReadLine();
-                 Inn inn = new Inn(innName);
+                innName = Console.ReadLine();
+                Inn inn = new Inn(innName);
                 List<Hero> EmptyList = new List<Hero>();
-                 inn.Hub(EmptyList);
-             }
-                
+                inn.Hub(EmptyList, innName);
+            }
+
         }
     }
 }
