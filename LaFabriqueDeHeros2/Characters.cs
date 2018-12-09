@@ -24,17 +24,17 @@ namespace TheHeroFactory
             get { return health; }
             set { health = value; }
         }
-        public float getSetAttack
+        public float StatisticAttack
         {
             get { return statisticAttack; }
             set { statisticAttack = value; }
         }
-        public float getSetDefense
+        public float StatisticDefense
         {
             get { return statisticDefense; }
             set { statisticDefense = value; }
         }
-        public float getSetDodge
+        public float StatisticDodge
         {
             get { return statisticDodge; }
             set { statisticDodge = value; }

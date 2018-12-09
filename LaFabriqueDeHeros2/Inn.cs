@@ -80,28 +80,24 @@ namespace TheHeroFactory
 
         public Hero ChooseYourHero(List<Hero> _tabOfHero)
         {
+           
+            begin:
             List<Hero> tabOfHero = _tabOfHero;
             Hero heroChoose = new Hero();
-
             string line = Console.ReadLine();
             int search = this.Compare(line, tabOfHero);
-
-            //barrière 
-            if (search > tabOfHero.Count)
-            {
-                Console.WriteLine("Petit problème");
-            }
-
             try
             {
                 heroChoose = tabOfHero[search];
-                Console.WriteLine(heroChoose.getSetAttack);
+                Console.WriteLine(heroChoose.StatisticAttack);
             }
             catch (Exception)
             {
                 TextMiddle("Pas trouvé :/ ");
+                Console.WriteLine("Alors lequel tu veux utiliser");
+                goto begin;
+
             }
-            Console.WriteLine(heroChoose.getSetAttack);
             return heroChoose;
         }
 
@@ -116,19 +112,16 @@ namespace TheHeroFactory
             }
             this.showListHero(tabOfHero);
             TextMiddle("_____Quel héro est le premier combattant ?_____");
-
+                                                    
             Hero hero1 = ChooseYourHero(tabOfHero);
-        //Deuxième Hero 
-        
+                                                    
             Console.Clear();
             TextMiddle("_____ Choisit le deuxième héro _____");
             this.showListHero(tabOfHero);
            
             Hero hero2 = ChooseYourHero(tabOfHero);
 
-
             string heroDead = Fight(hero1, hero2);
-            //Console.WriteLine(heroDead);
 
             if (heroDead == hero1.Name)
             {
@@ -192,9 +185,9 @@ namespace TheHeroFactory
             {
                 TextMiddle("_____" + h.Name + "____\n");
                 Console.WriteLine("Son niveau est " + h.Level);
-                Console.WriteLine("Son attaque est " + h.getSetAttack);
-                Console.WriteLine("Sa defense est " + h.getSetDefense);
-                Console.WriteLine("Son endurance est " + h.getSetDodge);
+                Console.WriteLine("Son attaque est " + h.StatisticAttack);
+                Console.WriteLine("Sa defense est " + h.StatisticDefense);
+                Console.WriteLine("Son endurance est " + h.StatisticDodge);
                 Console.WriteLine("Sa vie est : " + h.Health);
             }
         }
@@ -203,13 +196,11 @@ namespace TheHeroFactory
         {
             Hero fighter1 = _hero1;
             Hero fighter2 = _hero2;
-
+            Console.Clear();
             Console.WriteLine("=== Debut du combat ===");
             string dead = "";
             do
             {
-                int turn = 1;
-                Console.WriteLine("Tour numero " + turn);
                 Console.WriteLine("C'est " + fighter1.Name + " qui commence ");
                 Console.WriteLine(fighter1.Name + " Attaque !!");
 
@@ -268,7 +259,6 @@ namespace TheHeroFactory
             do
             {
                 Console.Clear();
-
                 TextMiddle("===== Bienvenue dans l'auberge de " + _nameInn + "=====");
                 TextMiddle("_____________Salut Pelerin_________________");
                 TextMiddle("__________Que souhaite tu faires ? ________");
@@ -280,7 +270,6 @@ namespace TheHeroFactory
                 TextMiddle("_____5 /-Pour supprimer un héro ___________");
                 TextMiddle("_____6 /-Pour sauvegarder votre partie ____");
                 TextMiddle("____________Esc /-Pour quitter ____________");
-
                 choose = Console.ReadKey();
 
                 switch (choose.KeyChar)
@@ -399,30 +388,15 @@ namespace TheHeroFactory
                     case '9':
                         Console.Clear();
                         Console.WriteLine("Cheat");
-                        Console.WriteLine("_____Ameliorer des héros ______");
+                        TextMiddle("_____Ameliorer des héros ______");
                         this.showListHero(tabOfHero);
-
-                        Console.WriteLine("_____saisir le numero du héro à amelioré ______");
-                        line = Console.ReadLine();
-                        search = 0;
-                        try
-                        {
-                            search = int.Parse(line);
+                        string witchOne = Console.ReadLine();
+                        try {
+                            Hero objet1 = tabOfHero[Compare(witchOne, tabOfHero)];
+                            objet1.LevelUp();
                         }
-                        catch (Exception)
-                        {
-                            Console.WriteLine("Problème /!\\ Chiffre entrée incorrect");
-                            break;
-                        }
-
-                        if (search + 1 > tabOfHero.Count())
-                        {
-                            Console.WriteLine("Problème /!\\ Chiffre entrée trop grand ");
-                            break;
-                        }
-
-                        Hero objet1 = tabOfHero[search];
-                        objet1.LevelUp();
+                        catch (Exception) { }
+                        
                         Console.ReadKey();
                         break;
                 };
