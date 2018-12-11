@@ -248,11 +248,59 @@ namespace TheHeroFactory
             Console.SetCursorPosition(nbspaces, Console.CursorTop);
             Console.WriteLine(text);
         }
+       
+        public void Train(List<Hero> tabOfHero)
+        {
+        train:
+            Console.Clear();
+            TextMiddle("_____Entrainer un héro_____");
+            this.showListHero(tabOfHero);
+            TextMiddle("_____Quel héro entrainer ?_____");
+            TextMiddle("Tape quit pour quitter ");
+            string line = Console.ReadLine();
+            if (line == "quit")
+            {
+                Console.Clear();
+                TextMiddle("Au revoir :'(");
+                System.Threading.Thread.Sleep(1500);
+            }
+            else
+            {
+                int search = this.Compare(line, tabOfHero);
+                if (search > tabOfHero.Count())
+                {
+                    Console.WriteLine("Petit problème");
+                    goto train;
+                }
+                try
+                {
+                    Console.WriteLine("Le héro séléctionné est : " + tabOfHero[search].Name);
+                    Hero hero = tabOfHero[search];
+                    //Train
+                    hero.Train(hero.Exp);
+
+                    //Check level up
+                    hero.CheckLevel();
+                }
+                catch (Exception)
+                {
+                    Console.Clear();
+                    TextMiddle("C'est la merde j'ai pas compris recommence");
+                    System.Threading.Thread.Sleep(1500);
+                    goto train;
+                }
+            }
+            TextMiddle(" Voulez vous recommencer ?! ");
+            TextMiddle("o pour oui");
+            line = Console.ReadLine();
+            if (line == "o" || line == "O")
+            {
+                goto train;
+            }
+        }
 
         public void Hub(List<Hero> _list, string _nameInn)
         {
-            int search = 0;
-            int compt2 = 0;
             string heroName;
             ConsoleKeyInfo choose;
             List<Hero> tabOfHero = _list;
@@ -298,7 +346,6 @@ namespace TheHeroFactory
                                 bernard.Write();
                                 tabOfHero.Add(bernard);
                                 Console.ReadKey();
-                                compt2++;
                             }
                         }
                         break;
@@ -311,55 +358,8 @@ namespace TheHeroFactory
                         break;
 
                     case '3': //a changer 
-
-                    train:
-                        Console.Clear();
-                        TextMiddle("_____Entrainer un héro_____");
-                        this.showListHero(tabOfHero);
-                        TextMiddle("_____Quel héro entrainer ?_____");
-                        TextMiddle("Tape quit pour quitter ");
-                        string line = Console.ReadLine();
-                        if (line == "quit")
-                        {
-                            Console.Clear();
-                            TextMiddle("Au revoir :'(");
-                            System.Threading.Thread.Sleep(1500);
-                            break;
-                        }
-                        else
-                        {
-                            search = this.Compare(line, tabOfHero);
-                            if (search > tabOfHero.Count())
-                            {
-                                Console.WriteLine("Petit problème");
-                                goto train;
-                            }
-                            try
-                            {
-                                Console.WriteLine("Le héro séléctionné est : " + tabOfHero[search].Name);
-                                Hero hero = tabOfHero[search];
-                                //Train
-                                hero.Train(hero.Exp);
-
-                                //Check level up
-                                hero.CheckLevel();
-                            }
-                            catch (Exception)
-                            {
-                                Console.Clear();
-                                TextMiddle("C'est la merde j'ai pas compris recommence");
-                                System.Threading.Thread.Sleep(1500);
-                                goto train;
-                            }
-                        }
-                        TextMiddle(" Voulez vous recommencer ?! ");
-                        TextMiddle("o pour oui");
-                        line = Console.ReadLine();
-                        if (line == "o" || line == "O")
-                        {
-                            goto train;
-                        }
-                        break;
+                        Train(tabOfHero);
+                        break; 
 
                     case '4':
                         Console.Clear();
