@@ -252,8 +252,7 @@ namespace TheHeroFactory
         public void Train(List<Hero> tabOfHero)
         {
         train:
-            Console.Clear();
-            TextMiddle("_____Entrainer un héro_____");
+           
             this.showListHero(tabOfHero);
             TextMiddle("_____Quel héro entrainer ?_____");
             TextMiddle("Tape quit pour quitter ");
@@ -358,6 +357,8 @@ namespace TheHeroFactory
                         break;
 
                     case '3': //a changer 
+                        Console.Clear();
+                        TextMiddle("_____Entrainer un héro_____");
                         Train(tabOfHero);
                         break; 
 
