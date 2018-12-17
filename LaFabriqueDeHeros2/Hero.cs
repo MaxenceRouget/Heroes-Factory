@@ -20,6 +20,7 @@ namespace TheHeroFactory
         {
             name = "Name";
             health = 15;
+            heathMax = health; // même valeur 
             statisticAttack = 5;
             statisticDefense = 3;
             statisticDodge = 1;
@@ -120,6 +121,7 @@ namespace TheHeroFactory
         public int LevelUp()
         {
             health *= 1.2f;
+            heathMax = health;
             statisticAttack *= 1.5f;
             statisticDefense *=1.3f;
             statisticDodge *= 1.1f;

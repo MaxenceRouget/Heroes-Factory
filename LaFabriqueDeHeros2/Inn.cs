@@ -128,7 +128,7 @@ namespace TheHeroFactory
                 Console.WriteLine(hero1.Name + " est mort ");
                 tabOfHero.Remove(hero1);
             }
-            else
+            else if (heroDead == hero2.Name)
             {
                 Console.WriteLine(hero2.Name +" est mort");
                 tabOfHero.Remove(hero2);
@@ -198,43 +198,54 @@ namespace TheHeroFactory
             Console.Clear();
             Console.WriteLine("=== Debut du combat ===");
             string dead = "";
+            int turn = 0;
+            float dam = 0;
             do
             {
-                Console.WriteLine(fighter1.Name + " Attaque !!");
-
-                float damage = fighter1.Attack(fighter2);
-                //string damage1 = damage.ToString();
-                fighter2.TakeDamage(damage);
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.BackgroundColor = ConsoleColor.Black;
-                Console.WriteLine(fighter2.Name + " prend " + damage + " de degats\n");
-                System.Threading.Thread.Sleep(1000);
-                Console.ResetColor();
-                if (fighter2.Health <= 0)
+                if (turn % 2 == 1)
                 {
-                    dead = fighter2.Name;
-                    break;
+                    TextMiddle("turn " + turn);
+                    Console.WriteLine(fighter1.Name + " Attaque !!");
+
+                    dam = fighter1.Attack(fighter2);
+                    //string damage1 = damage.ToString();
+                    fighter2.TakeDamage(dam);
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.BackgroundColor = ConsoleColor.Black;
+                    Console.WriteLine(fighter2.Name + " prend " + dam + " de degats\n");
+                    System.Threading.Thread.Sleep(1000);
+                    Console.ResetColor();
                 }
                 else
                 {
+                    TextMiddle("turn " + turn);
                     Console.WriteLine(fighter2.Name + " Attaque !!");
-                    float _damage = fighter2.Attack(fighter1);
-                    fighter1.TakeDamage(_damage);
+
+                    dam = fighter2.Attack(fighter1);
+                    //string damage1 = damage.ToString();
+                    fighter1.TakeDamage(dam);
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.BackgroundColor = ConsoleColor.Black;
-                    Console.WriteLine(fighter1.Name + " prend " + damage + " de degats\n");
+                    Console.WriteLine(fighter1.Name + " prend " + dam + " de degats\n");
                     System.Threading.Thread.Sleep(1000);
                     Console.ResetColor();
 
-                    if (fighter1.Health <= 0)
-                    {
-                        dead = fighter1.Name;
-                        break;
-                    }
-
                 }
-
+                turn++;
+            
             } while (fighter1.Health > 0 && fighter2.Health > 0);
+
+            if (fighter1.Health <= 0)
+            {
+                dead = fighter1.Name;
+                fighter2.Health = fighter2.Healthmax;
+
+            }
+            else if (fighter2.Health <= 0)
+            {
+                dead = fighter2.Name;
+                fighter1.Health = fighter1.Healthmax;
+            }
 
             Console.WriteLine("Fin du combat ");
             return dead;

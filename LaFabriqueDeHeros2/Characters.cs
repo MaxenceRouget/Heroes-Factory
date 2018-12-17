@@ -9,7 +9,8 @@ namespace TheHeroFactory
     public class Characters
     {
         protected string name;
-        protected float health; 
+        protected float health;
+        protected float heathMax;
         protected float statisticAttack;
         protected float statisticDefense;
         protected float statisticDodge;//stamina
@@ -24,6 +25,13 @@ namespace TheHeroFactory
             get { return health; }
             set { health = value; }
         }
+
+        public float Healthmax
+        {
+            get { return heathMax; }
+            set { heathMax = value; }
+        }
+
         public float StatisticAttack
         {
             get { return statisticAttack; }
