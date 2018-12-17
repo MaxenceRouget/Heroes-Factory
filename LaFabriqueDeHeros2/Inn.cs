@@ -38,7 +38,7 @@ namespace TheHeroFactory
         private void Delete(List<Hero> _listOfHeroes)
         {
             List <Hero> tabOfHero = _listOfHeroes; 
-            this.showListHero(tabOfHero);
+            this.ShowListHero(tabOfHero);
             Console.WriteLine("_____ Saisir le nom du héro à supprimer ______");
             string line = Console.ReadLine();
             int search = this.Compare(line, tabOfHero);
@@ -110,14 +110,14 @@ namespace TheHeroFactory
                 Console.WriteLine("Il faut au moins deux héros pour combattre");
                 Console.ReadKey();
             }
-            this.showListHero(tabOfHero);
+            this.ShowListHero(tabOfHero);
             TextMiddle("_____Quel héro est le premier combattant ?_____");
                                                     
             Hero hero1 = ChooseYourHero(tabOfHero);
                                                     
             Console.Clear();
             TextMiddle("_____ Choisit le deuxième héro _____");
-            this.showListHero(tabOfHero);
+            this.ShowListHero(tabOfHero);
            
             Hero hero2 = ChooseYourHero(tabOfHero);
 
@@ -135,7 +135,6 @@ namespace TheHeroFactory
             }
 
             Console.WriteLine("Combat Fini");
-
             Console.ReadKey();
         }
 
@@ -160,9 +159,9 @@ namespace TheHeroFactory
             return result;
         }
 
-        public int Compare(string _name, List<Hero> _List)
+        public int Compare(string _name, List<Hero> _list)
         {
-            List<Hero> tabOfHeroes = _List;
+            List<Hero> tabOfHeroes = _list;
             int indexHero = 0;
             try
             {
@@ -178,7 +177,7 @@ namespace TheHeroFactory
             return indexHero;
         }
 
-        public void showListHero(List<Hero> _tabOfHeroes)
+        public void ShowListHero(List<Hero> _tabOfHeroes)
         {
             List<Hero> tabOfHero = _tabOfHeroes;
             foreach (Hero h in tabOfHero)
@@ -201,15 +200,14 @@ namespace TheHeroFactory
             string dead = "";
             do
             {
-                Console.WriteLine("C'est " + fighter1.Name + " qui commence ");
                 Console.WriteLine(fighter1.Name + " Attaque !!");
 
                 float damage = fighter1.Attack(fighter2);
-                string damage1 = damage.ToString();
+                //string damage1 = damage.ToString();
                 fighter2.TakeDamage(damage);
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.BackgroundColor = ConsoleColor.Black;
-                Console.WriteLine(fighter2.Name + " prend " + damage1 + " de degats\n");
+                Console.WriteLine(fighter2.Name + " prend " + damage + " de degats\n");
                 System.Threading.Thread.Sleep(1000);
                 Console.ResetColor();
                 if (fighter2.Health <= 0)
@@ -253,7 +251,7 @@ namespace TheHeroFactory
         {
         train:
            
-            this.showListHero(tabOfHero);
+            this.ShowListHero(tabOfHero);
             TextMiddle("_____Quel héro entrainer ?_____");
             TextMiddle("Tape quit pour quitter ");
             string line = Console.ReadLine();
@@ -297,7 +295,6 @@ namespace TheHeroFactory
                 goto train;
             }
         }
-
         public void Hub(List<Hero> _list, string _nameInn)
         {
             string heroName;
@@ -352,7 +349,7 @@ namespace TheHeroFactory
                     case '2':
                         Console.Clear();
                         TextMiddle("_____Afficher les héros _____");
-                        this.showListHero(tabOfHero);
+                        this.ShowListHero(tabOfHero);
                         Console.ReadKey();
                         break;
 
@@ -390,7 +387,7 @@ namespace TheHeroFactory
                         Console.Clear();
                         Console.WriteLine("Cheat");
                         TextMiddle("_____Ameliorer des héros ______");
-                        this.showListHero(tabOfHero);
+                        this.ShowListHero(tabOfHero);
                         string witchOne = Console.ReadLine();
                         try {
                             Hero objet1 = tabOfHero[Compare(witchOne, tabOfHero)];

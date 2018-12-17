@@ -39,7 +39,7 @@ namespace TheHeroFactory
             get { return exp; }
             set { exp = value; }
         }
-        public float getSetNbExpMax
+        public float NbExpMax
         {
             get { return nbExpMax; }
             set { nbExpMax = value; }
@@ -60,7 +60,7 @@ namespace TheHeroFactory
             Monster monster = new Monster();
             for(int i = 0; i < this.level; i++)
             {
-                monster.levelMonsterUp();
+                monster.LevelMonsterUp();
                 comptLvlMonster = i; 
                 
             }

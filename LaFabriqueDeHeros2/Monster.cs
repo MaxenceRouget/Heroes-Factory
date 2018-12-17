@@ -17,7 +17,7 @@ namespace TheHeroFactory
 
             }
 
-        public void levelMonsterUp()
+        public void LevelMonsterUp()
         {
             this.health *= 1.5f;
             this.statisticAttack *=1.2f;

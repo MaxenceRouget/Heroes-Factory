@@ -8,7 +8,7 @@ namespace TheHeroFactory
 {
     public class Characters
     {
-        protected string name{ get; set; }
+        protected string name;
         protected float health; 
         protected float statisticAttack;
         protected float statisticDefense;
