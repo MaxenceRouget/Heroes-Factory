@@ -13,7 +13,7 @@ namespace TheHeroFactory
             name = "Monstre";
             health = 5;
             statisticAttack = 1.2f;
-            statisticDefense = 0.5f;
+            statisticStamina = 0.5f;
 
             }
 
@@ -21,7 +21,7 @@ namespace TheHeroFactory
         {
             this.health *= 1.5f;
             this.statisticAttack *=1.2f;
-            this.statisticDefense *= 1.12f;
+            this.statisticStamina *= 1.12f;
 
         }
     }   

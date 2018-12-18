@@ -22,7 +22,7 @@ namespace TheHeroFactory
             health = 15;
             heathMax = health; // même valeur 
             statisticAttack = 5;
-            statisticDefense = 3;
+            statisticStamina = 3;
             statisticDodge = 1;
             level = 1;
             exp = 0;
@@ -50,7 +50,7 @@ namespace TheHeroFactory
             Console.WriteLine("Le nom de votre héro est : " + name);
             Console.WriteLine("Son niveau est : " + level+"\n");
             Console.WriteLine("Son attaque est de : " + statisticAttack);
-            Console.WriteLine("Sa defense est de : "+ statisticDefense);
+            Console.WriteLine("Sa defense est de : "+ statisticStamina);
             Console.WriteLine("Son endurance est de : "+ statisticDodge);
         }
 
@@ -69,10 +69,12 @@ namespace TheHeroFactory
             int turn = 1;
             do
             {
-                Console.WriteLine("Tour numero " + turn);
-                Console.WriteLine("C'est " + this.Name + " qui commence ");
+                Inn.TextMiddle("Tour numero " + turn);
                 Console.WriteLine(this.Name + " Attaque !!");
 
+                Random random = new Random();
+                int entierUnChiffre = random.Next(30); //Génère un entier compris entre 0 et 9
+              
                 float damage = this.Attack(monster);
                 monster.TakeDamage(this.Attack(monster));
                 Console.ForegroundColor = ConsoleColor.Red;
@@ -87,14 +89,20 @@ namespace TheHeroFactory
                 }
                 else
                 {
-                    Console.WriteLine(monster.Name + " Attaque !!");
-                    float _damage = monster.Attack(this);
-                    this.TakeDamage(_damage);
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.BackgroundColor = ConsoleColor.Black;
-                    Console.WriteLine(_damage);
-                    System.Threading.Thread.Sleep(1000);
-                    Console.ResetColor();
+                    if (this.StatisticDodge + entierUnChiffre >= 30)
+                    {
+                        Inn.TextMiddle("Il esquive");
+                    }
+                    else {
+                        Console.WriteLine(monster.Name + " Attaque !!");
+                        float _damage = monster.Attack(this);
+                        this.TakeDamage(_damage);
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.BackgroundColor = ConsoleColor.Black;
+                        Console.WriteLine(_damage);
+                        System.Threading.Thread.Sleep(1000);
+                        Console.ResetColor();
+                    }
 
                     if (this.Health <= 0)
                     {
@@ -105,7 +113,7 @@ namespace TheHeroFactory
                         break;
                     }
                 }
-
+                turn++;
             } while (this.Health > 0 && monster.Health > 0);
 
             Console.WriteLine("Fin du combat ");
@@ -123,7 +131,7 @@ namespace TheHeroFactory
             health *= 1.2f;
             heathMax = health;
             statisticAttack *= 1.5f;
-            statisticDefense *=1.3f;
+            statisticStamina *=1.3f;
             statisticDodge *= 1.1f;
             level++;
             exp = 0;

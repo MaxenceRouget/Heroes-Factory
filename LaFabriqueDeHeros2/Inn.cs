@@ -85,19 +85,21 @@ namespace TheHeroFactory
             List<Hero> tabOfHero = _tabOfHero;
             Hero heroChoose = new Hero();
             string line = Console.ReadLine();
-            int search = this.Compare(line, tabOfHero);
-            try
-            {
-                heroChoose = tabOfHero[search];
-                Console.WriteLine(heroChoose.StatisticAttack);
-            }
-            catch (Exception)
-            {
-                TextMiddle("Pas trouvé :/ ");
-                Console.WriteLine("Alors lequel tu veux utiliser");
-                goto begin;
+           
+                int search = this.Compare(line, tabOfHero);
 
-            }
+                try
+                {
+                    heroChoose = tabOfHero[search];
+                    Console.WriteLine(heroChoose.StatisticAttack);
+                }
+                catch (Exception)
+                {
+                    TextMiddle("Pas trouvé :/ ");
+                    Console.WriteLine("Alors lequel tu veux utiliser");
+                    goto begin;
+
+                }
             return heroChoose;
         }
 
@@ -185,7 +187,7 @@ namespace TheHeroFactory
                 TextMiddle("_____" + h.Name + "____\n");
                 Console.WriteLine("Son niveau est " + h.Level);
                 Console.WriteLine("Son attaque est " + h.StatisticAttack);
-                Console.WriteLine("Sa defense est " + h.StatisticDefense);
+                Console.WriteLine("Sa defense est " + h.StatisticStamina);
                 Console.WriteLine("Son endurance est " + h.StatisticDodge);
                 Console.WriteLine("Sa vie est : " + h.Health);
             }
@@ -193,6 +195,9 @@ namespace TheHeroFactory
 
         public string Fight(Hero _hero1, Hero _hero2)
         {
+
+            Random rand = new Random();
+
             Hero fighter1 = _hero1;
             Hero fighter2 = _hero2;
             Console.Clear();
@@ -202,35 +207,50 @@ namespace TheHeroFactory
             float dam = 0;
             do
             {
+                int NumberRand = rand.Next(30);
                 if (turn % 2 == 1)
                 {
                     TextMiddle("turn " + turn);
                     Console.WriteLine(fighter1.Name + " Attaque !!");
 
-                    dam = fighter1.Attack(fighter2);
-                    //string damage1 = damage.ToString();
-                    fighter2.TakeDamage(dam);
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.BackgroundColor = ConsoleColor.Black;
-                    Console.WriteLine(fighter2.Name + " prend " + dam + " de degats\n");
-                    System.Threading.Thread.Sleep(1000);
-                    Console.ResetColor();
+                    if (NumberRand+fighter2.StatisticStamina >= 30)
+                    {
+                        TextMiddle(fighter2.Name+" esquive");
+                    }
+                    else
+                    {
+                        dam = fighter1.Attack(fighter2);
+                        fighter2.TakeDamage(dam);
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.BackgroundColor = ConsoleColor.Black;
+                        Console.WriteLine(fighter2.Name + " prend " + dam + " de degats\n");
+                        System.Threading.Thread.Sleep(1000);
+                        Console.ResetColor();
+                    }
+                    
                 }
                 else
                 {
-                    TextMiddle("turn " + turn);
-                    Console.WriteLine(fighter2.Name + " Attaque !!");
+                    if (NumberRand + fighter1.StatisticStamina >= 30)
+                    {
+                        TextMiddle(fighter1.Name + " esquive");
+                    }
+                    else
+                    {
+                        TextMiddle("turn " + turn);
+                        Console.WriteLine(fighter2.Name + " Attaque !!");
 
-                    dam = fighter2.Attack(fighter1);
-                    //string damage1 = damage.ToString();
-                    fighter1.TakeDamage(dam);
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.BackgroundColor = ConsoleColor.Black;
-                    Console.WriteLine(fighter1.Name + " prend " + dam + " de degats\n");
-                    System.Threading.Thread.Sleep(1000);
-                    Console.ResetColor();
-
+                        dam = fighter2.Attack(fighter1);
+                        //string damage1 = damage.ToString();
+                        fighter1.TakeDamage(dam);
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.BackgroundColor = ConsoleColor.Black;
+                        Console.WriteLine(fighter1.Name + " prend " + dam + " de degats\n");
+                        System.Threading.Thread.Sleep(1000);
+                        Console.ResetColor();
+                    }
                 }
+
                 turn++;
             
             } while (fighter1.Health > 0 && fighter2.Health > 0);
@@ -303,6 +323,7 @@ namespace TheHeroFactory
             line = Console.ReadLine();
             if (line == "o" || line == "O")
             {
+                Console.Clear();
                 goto train;
             }
         }

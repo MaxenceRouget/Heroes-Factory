@@ -12,8 +12,8 @@ namespace TheHeroFactory
         protected float health;
         protected float heathMax;
         protected float statisticAttack;
-        protected float statisticDefense;
-        protected float statisticDodge;//stamina
+        protected float statisticStamina;
+        protected float statisticDodge;
         
         public string Name
         {
@@ -37,10 +37,10 @@ namespace TheHeroFactory
             get { return statisticAttack; }
             set { statisticAttack = value; }
         }
-        public float StatisticDefense
+        public float StatisticStamina
         {
-            get { return statisticDefense; }
-            set { statisticDefense = value; }
+            get { return statisticStamina; }
+            set { statisticStamina = value; }
         }
         public float StatisticDodge
         {
@@ -51,7 +51,7 @@ namespace TheHeroFactory
 
         public float Attack(Characters _FighterOposent)
         {
-            float damage = statisticAttack - _FighterOposent.statisticDefense;
+            float damage = statisticAttack - _FighterOposent.statisticStamina;
             return damage;
         }
         
