@@ -48,9 +48,7 @@ namespace TheHeroFactory
                 Console.WriteLine("Trop grand nombre");
             }
 
-            else
-            {
-                try
+            try
                 {
                     Console.Clear();
                     tabOfHero.RemoveAt(search);
@@ -62,7 +60,6 @@ namespace TheHeroFactory
                     Console.WriteLine("/!\\ Petit problème");
                 }
             }
-        }
         public void Serialization(List<Hero> _tabOfHero)
         {
             Stream stream = File.OpenWrite(Environment.CurrentDirectory + "\\mySave.txt");
@@ -137,7 +134,6 @@ namespace TheHeroFactory
             }
 
             Console.WriteLine("Combat Fini");
-            Console.ReadKey();
         }
 
         public bool Verification(string _name, List<Hero> _List)
@@ -171,6 +167,7 @@ namespace TheHeroFactory
                 {
                     indexHero++;
                 }
+                
             }
             catch (Exception)
             {
@@ -271,6 +268,12 @@ namespace TheHeroFactory
             return dead;
         }
 
+        public void Bye()
+        {
+            TextMiddle("Press any key for exit ...");
+            Console.ReadKey();
+        }
+
         public static void TextMiddle(string text)
         {
             int nbspaces = (Console.WindowWidth - text.Length) / 2;
@@ -364,7 +367,6 @@ namespace TheHeroFactory
                             {
                                 Console.Clear();
                                 TextMiddle("Ce nom est déjà attribué ! ");
-                                Console.ReadKey();
                                 break;
                             }
                             else
@@ -373,28 +375,30 @@ namespace TheHeroFactory
                                 bernard.Name = heroName;
                                 bernard.Write();
                                 tabOfHero.Add(bernard);
-                                Console.ReadKey();
                             }
                         }
+                        Bye();
                         break;
 
                     case '2':
                         Console.Clear();
                         TextMiddle("_____Afficher les héros _____");
                         this.ShowListHero(tabOfHero);
-                        Console.ReadKey();
+                        Bye();
                         break;
 
                     case '3': //a changer 
                         Console.Clear();
                         TextMiddle("_____Entrainer un héro_____");
                         Train(tabOfHero);
+                        Bye();
                         break; 
 
                     case '4':
                         Console.Clear();
                         TextMiddle("_____ Combat de Heros _____");
                         this.MenuFight(tabOfHero);
+                        Bye(); 
                         break;
 
                     //Tu vas pas supprimer ton héros :'(
@@ -411,7 +415,7 @@ namespace TheHeroFactory
                         this.Serialization(tabOfHero);
                         Console.Clear();
                         TextMiddle("Sauvegarde Effectué");
-                        Console.ReadKey();
+                        Bye();
                         break;
 
                     // Ici on cheat nous Monsieur ! 
@@ -426,8 +430,8 @@ namespace TheHeroFactory
                             objet1.LevelUp();
                         }
                         catch (Exception) { }
-                        
-                        Console.ReadKey();
+
+                        Bye();
                         break;
                 };
 
