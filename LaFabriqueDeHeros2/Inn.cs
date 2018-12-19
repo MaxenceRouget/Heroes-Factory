@@ -55,6 +55,7 @@ namespace TheHeroFactory
                 catch (Exception)
                 {
                     Console.WriteLine("/!\\ Petit problème");
+                Bye();
                 }
             }
         public void Serialization(List<Hero> _tabOfHero)
