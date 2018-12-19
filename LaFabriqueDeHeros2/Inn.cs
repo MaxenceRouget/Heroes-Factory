@@ -22,10 +22,7 @@ namespace TheHeroFactory
         {
             this.name = _name;
         }
-        public Inn(List<Hero> _tabOfHeroe)
-        {
 
-        }
         public void Show(List<Hero> _listOfHeroes)
         {
             List<Hero> list = _listOfHeroes;
